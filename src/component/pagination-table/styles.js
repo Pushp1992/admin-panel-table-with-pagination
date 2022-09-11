@@ -3,7 +3,7 @@ const { default: styled } = require('styled-components');
 const ParentWrapper = styled.div.withConfig({
     displayName: "ParentWrapper"
 })`
-background-color: whitesmoke;
+/* background-color: whitesmoke; */
 `;
 
 const MenuBarWrapper = styled.div.withConfig({
@@ -22,9 +22,34 @@ const TableWrapper = styled.div.withConfig({
 background-color: whitesmoke;
 `;
 
+const PaginationComponentParentWrapper = styled.div.withConfig({
+    displayName: "PaginationComponentParentWrapper"
+})`
+padding-top: 2rem;
+list-style: none;
+display: grid;
+align-content: space-between;
+justify-content: space-evenly;
+align-items: center;
+justify-items: center;
+grid-auto-flow: column;
+/* flex-direction: row; */
+
+li {
+    display: flex;
+    justify-content: inherit;
+    
+    cursor: pointer;
+    background-color: brown;
+    min-width: 2rem;
+    color: white;
+}
+`;
+
 
 export {
     ParentWrapper,
     MenuBarWrapper,
-    TableWrapper
+    TableWrapper,
+    PaginationComponentParentWrapper
 };
