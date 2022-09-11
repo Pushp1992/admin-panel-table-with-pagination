@@ -5,7 +5,6 @@ const AdminPanelWrapper = styled.div.withConfig({
 })`
 display: grid;
 grid-column: auto;
-background-color: whitesmoke;
 margin: 4rem;
 min-height: 70vh;
 `;

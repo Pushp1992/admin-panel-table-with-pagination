@@ -1,22 +1,30 @@
 const { default: styled } = require('styled-components');
 
-const TableWrapper = styled.div.withConfig({
-    displayName: "TableWrapper"
+const ParentWrapper = styled.div.withConfig({
+    displayName: "ParentWrapper"
 })`
-background-color: azure;
+background-color: whitesmoke;
 `;
 
 const MenuBarWrapper = styled.div.withConfig({
     displayName: "MenuBarWrapper"
 })`
-background-color: aliceblue;
+padding-bottom: 5rem;
+background-color: #3c1760;
 display: flex;
 flex-direction: row;
-justify-items: flex-end;
+justify-content: flex-end;
+`;
+
+const TableWrapper = styled.div.withConfig({
+    displayName: "TableWrapper"
+})`
+background-color: whitesmoke;
 `;
 
 
 export {
-    TableWrapper,
-    MenuBarWrapper
+    ParentWrapper,
+    MenuBarWrapper,
+    TableWrapper
 };

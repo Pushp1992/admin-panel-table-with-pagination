@@ -7,8 +7,9 @@ import DropDownField from '../drop-down/drop-down-field';
 import * as Constants from '../../utils/constant';
 
 const {
-    TableWrapper,
-    MenuBarWrapper
+    ParentWrapper,
+    MenuBarWrapper,
+    TableWrapper
 } = require('./styles');
 
 const Table = ({ items }) => {
@@ -40,28 +41,30 @@ const Table = ({ items }) => {
 
 
     return (
-        <table>
-            <tr>
-                <th><CheckBox /></th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Role</th>
-            </tr>
-            {
-                tableData.map((item, index) =>
-                    <tr key={index}>
-                        <td><CheckBox onChange={(e) => handleCheckBoxChange(e, item.id)} /></td>
-                        <td>{item.name}</td>
-                        <td>{item.email}</td>
-                        <td>{item.role}</td>
-                        <td>
-                            <Button name="edit" value="edit" onClick={(e) => performEditOperation(e, item.id)} />
-                            <Button name="delete" value="delete" onClick={(e) => performDeleteOperation(e, item.id)} />
-                        </td>
-                    </tr>
-                )
-            }
-        </table>
+        <TableWrapper>
+            <table>
+                <tr>
+                    <th><CheckBox /></th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                </tr>
+                {
+                    tableData.map((item, index) =>
+                        <tr key={index}>
+                            <td><CheckBox onChange={(e) => handleCheckBoxChange(e, item.id)} /></td>
+                            <td>{item.name}</td>
+                            <td>{item.email}</td>
+                            <td>{item.role}</td>
+                            <td>
+                                <Button name="edit" value="edit" onClick={(e) => performEditOperation(e, item.id)} />
+                                <Button name="delete" value="delete" onClick={(e) => performDeleteOperation(e, item.id)} />
+                            </td>
+                        </tr>
+                    )
+                }
+            </table>
+        </TableWrapper>
     )
 };
 
@@ -94,12 +97,12 @@ const TableComponent = ({ items = [] }) => {
 
     const getDropDownFieldvalue = (e) => {
         e.preventDefault();
-        const {value } = e.target;
+        const { value } = e.target;
         setFilterType(value);
     };
 
     return (
-        <TableWrapper>
+        <ParentWrapper>
             <MenuBarWrapper>
                 <DropDownField name="search-filter" items={Constants.SearchFilterOption} onChange={getDropDownFieldvalue} />
                 <TextField name="search" value={searchKeyword} placeholder="search" onChange={handleInputChange} />
@@ -107,7 +110,7 @@ const TableComponent = ({ items = [] }) => {
                 <Button name="reset" onClick={handleRestOperation} />
             </MenuBarWrapper>
             <Table items={initialTableData} />
-        </TableWrapper>
+        </ParentWrapper>
     )
 };
 
