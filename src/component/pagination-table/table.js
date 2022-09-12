@@ -10,11 +10,16 @@ const {
     ParentWrapper,
     MenuBarWrapper,
     TableWrapper,
+    DeleteAllButtonWrpper,
+    TableRowWrapper,
     PaginationComponentParentWrapper
 } = require('./styles');
 
 const Table = ({ items }) => {
     const [tableData, setTableData] = useState(items);
+    const [selectedItemsId, setSelectedItemsId] = useState([]);
+    const [currentRowId, setCurrentRowId] = useState('');
+    const [isSingleRowSelected, setIsSingleRowSelected] = useState(false);
 
     useEffect(() => {
         setTableData(items);
@@ -22,30 +27,63 @@ const Table = ({ items }) => {
 
     const performEditOperation = (e, rowId) => {
         e.preventDefault();
-
         const { name } = e.target;
         console.log(name, rowId)
     };
 
     const performDeleteOperation = (e, rowId) => {
         e.preventDefault();
-        const filteredList = tableData.filter(item => item.id !== rowId);
+        let filteredList;
+
+        if (rowId) filteredList = tableData.filter(item => item.id !== rowId);
+        else {
+            filteredList = tableData.filter(item => !selectedItemsId.includes(item.id));
+            document.getElementsByClassName('select-all')[0].checked = false;
+            setSelectedItemsId(filteredList);
+        }
         setTableData(filteredList);
     };
 
-    const handleCheckBoxChange = (e, rowId) => {
-        e.stopPropagation()
+    const performActionOnSelectAllBtn = (e, isSelectAllBtnIsChecked) => {
+        const checkBoxes = document.getElementsByClassName("select-one");
+        let selectedItemsId = [];
 
-        const { checked } = e.target;
-        console.log(checked, rowId);
+        for (let item of checkBoxes) {
+            if (isSelectAllBtnIsChecked) {
+                item.checked = e.target.checked;
+                selectedItemsId.push(item.id);
+            } else {
+                item.checked = e.target.checked;
+                selectedItemsId.length = 0;
+            }
+        };
+        setSelectedItemsId(selectedItemsId);
     };
 
+    const handleCheckBoxChange = (e, rowId) => {
+        e.stopPropagation();
+
+        const { checked } = e.target;
+        if (rowId) {
+            setIsSingleRowSelected(checked);
+            setCurrentRowId(rowId);
+            // todo: what if single row is selected
+        } else {
+            performActionOnSelectAllBtn(e, checked);
+        }
+    };
 
     return (
         <TableWrapper>
+            <DeleteAllButtonWrpper selectedItemsId={selectedItemsId}>
+                {
+                    !!selectedItemsId.length &&
+                    <Button name="delete all" value="delete" onClick={(e) => performDeleteOperation(e)} />
+                }
+            </DeleteAllButtonWrpper>
             <table>
                 <tr>
-                    <th><CheckBox /></th>
+                    <th><CheckBox className="select-all" onChange={handleCheckBoxChange} /></th>
                     <th>#Id</th>
                     <th>Name</th>
                     <th>Email</th>
@@ -53,17 +91,21 @@ const Table = ({ items }) => {
                 </tr>
                 {
                     tableData.map((item, index) =>
-                        <tr key={index}>
-                            <td><CheckBox onChange={(e) => handleCheckBoxChange(e, item.id)} /></td>
+                        <TableRowWrapper key={index} id={item.id} rowId={currentRowId} isSingleRowSelected={isSingleRowSelected}>
+                            <td><CheckBox className="select-one" id={item.id} onChange={(e) => handleCheckBoxChange(e, item.id)} /></td>
                             <td>{item.id}</td>
                             <td>{item.name}</td>
                             <td>{item.email}</td>
                             <td>{item.role}</td>
                             <td>
                                 <Button name="edit" value="edit" onClick={(e) => performEditOperation(e, item.id)} />
-                                <Button name="delete" value="delete" onClick={(e) => performDeleteOperation(e, item.id)} />
+                                {
+                                    !selectedItemsId.length &&
+                                    <Button name="delete" value="delete" onClick={(e) => performDeleteOperation(e, item.id)} />
+                                }
+
                             </td>
-                        </tr>
+                        </TableRowWrapper>
                     )
                 }
             </table>
@@ -77,23 +119,21 @@ const TableComponent = ({ items = [] }) => {
     const [filterType, setFilterType] = useState('');
 
     const [currentPage, setcurrentPage] = useState(1);
-    const [itemsPerPage, setitemsPerPage] = useState(5);
+    const [itemsPerPage] = useState(10);
 
-    const [pageNumberLimit, setpageNumberLimit] = useState(5);
-    const [maxPageNumberLimit, setmaxPageNumberLimit] = useState(5);
+    const [pageNumberLimit] = useState(5);
+    const [maxPageNumberLimit, setmaxPageNumberLimit] = useState(6);
     const [minPageNumberLimit, setminPageNumberLimit] = useState(0);
-
-
-    // pagination logic start
 
     useEffect(() => {
         setInitialTableData(items);
     }, [])
 
-    const handleClick = (event) => {
+    const handleCurrentPage = (event) => {
         setcurrentPage(Number(event.target.id));
     };
 
+    // Logic to handle all pagination activities
     const PageList = new Array(Math.ceil(initialTableData.length / itemsPerPage));
     const pageCountList = [...PageList.keys()];
     pageCountList.shift();
@@ -102,13 +142,14 @@ const TableComponent = ({ items = [] }) => {
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = initialTableData.slice(indexOfFirstItem, indexOfLastItem);
 
+    // Logic to display page number button e.g 1,2,3
     const renderPageNumbers = pageCountList.map((currentPageNumber) => {
         return (
             (currentPageNumber < maxPageNumberLimit + 1 && currentPageNumber > minPageNumberLimit) &&
             <li
                 key={currentPageNumber}
                 id={currentPageNumber}
-                onClick={handleClick}
+                onClick={handleCurrentPage}
                 className={currentPage === currentPageNumber ? "active" : null}
             >
                 {currentPageNumber}
@@ -156,8 +197,6 @@ const TableComponent = ({ items = [] }) => {
         )
     };
 
-    // pagination logic ends
-
     const handleInputChange = (e) => {
         e.preventDefault();
 
@@ -172,12 +211,11 @@ const TableComponent = ({ items = [] }) => {
         setInitialTableData(filteredResult);
     };
 
-    const handleRestOperation = (e) => {
+    const handleResetOperation = (e) => {
         e.preventDefault();
         setInitialTableData(items);
         setSearchKeyword('');
         setFilterType('');
-
     };
 
     const getDropDownFieldvalue = (e) => {
@@ -192,7 +230,7 @@ const TableComponent = ({ items = [] }) => {
                 <DropDownField name="search-filter" items={Constants.SearchFilterOption} onChange={getDropDownFieldvalue} />
                 <TextField name="search" value={searchKeyword} placeholder="search" onChange={handleInputChange} />
                 <Button name="search" onClick={handleSearchOperation} />
-                <Button name="reset" onClick={handleRestOperation} />
+                <Button name="reset" onClick={handleResetOperation} />
             </MenuBarWrapper>
             <Table items={currentItems} />
             <PaginationComponent />

@@ -5,11 +5,12 @@ const CheckBox = ({
     id,
     name,
     value,
-    onChange
+    onChange,
+    className
 }) => {
     return (
         <>
-            <input type="checkbox" id={id} name={name} value={value} onChange={onChange} />
+            <input type="checkbox" id={id} name={name} className={className} value={value} onChange={onChange} />
             <label htmlFor={name}>{name}</label>
         </>
     )
@@ -17,6 +18,7 @@ const CheckBox = ({
 
 CheckBox.propTypes = {
     id: PropTypes.any,
+    className: PropTypes.string,
     name: PropTypes.string,
     value: PropTypes.string,
     onChange: PropTypes.func,
