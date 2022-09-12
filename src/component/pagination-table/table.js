@@ -11,12 +11,15 @@ const {
     MenuBarWrapper,
     TableWrapper,
     DeleteAllButtonWrpper,
+    TableRowWrapper,
     PaginationComponentParentWrapper
 } = require('./styles');
 
 const Table = ({ items }) => {
     const [tableData, setTableData] = useState(items);
     const [selectedItemsId, setSelectedItemsId] = useState([]);
+    const [currentRowId, setCurrentRowId] = useState('');
+    const [isSingleRowSelected, setIsSingleRowSelected] = useState(false);
 
     useEffect(() => {
         setTableData(items);
@@ -32,10 +35,11 @@ const Table = ({ items }) => {
         e.preventDefault();
         let filteredList;
 
-        if (rowId) {
-            filteredList = tableData.filter(item => item.id !== rowId);
-        } else {
+        if (rowId) filteredList = tableData.filter(item => item.id !== rowId);
+        else {
             filteredList = tableData.filter(item => !selectedItemsId.includes(item.id));
+            document.getElementsByClassName('select-all')[0].checked = false;
+            setSelectedItemsId(filteredList);
         }
         setTableData(filteredList);
     };
@@ -61,6 +65,9 @@ const Table = ({ items }) => {
 
         const { checked } = e.target;
         if (rowId) {
+            setIsSingleRowSelected(checked);
+            setCurrentRowId(rowId);
+            // todo: what if single row is selected
         } else {
             performActionOnSelectAllBtn(e, checked);
         }
@@ -84,7 +91,7 @@ const Table = ({ items }) => {
                 </tr>
                 {
                     tableData.map((item, index) =>
-                        <tr key={index}>
+                        <TableRowWrapper key={index} id={item.id} rowId={currentRowId} isSingleRowSelected={isSingleRowSelected}>
                             <td><CheckBox className="select-one" id={item.id} onChange={(e) => handleCheckBoxChange(e, item.id)} /></td>
                             <td>{item.id}</td>
                             <td>{item.name}</td>
@@ -98,7 +105,7 @@ const Table = ({ items }) => {
                                 }
 
                             </td>
-                        </tr>
+                        </TableRowWrapper>
                     )
                 }
             </table>
@@ -112,17 +119,17 @@ const TableComponent = ({ items = [] }) => {
     const [filterType, setFilterType] = useState('');
 
     const [currentPage, setcurrentPage] = useState(1);
-    const [itemsPerPage] = useState(5);
+    const [itemsPerPage] = useState(10);
 
     const [pageNumberLimit] = useState(5);
-    const [maxPageNumberLimit, setmaxPageNumberLimit] = useState(5);
+    const [maxPageNumberLimit, setmaxPageNumberLimit] = useState(6);
     const [minPageNumberLimit, setminPageNumberLimit] = useState(0);
 
     useEffect(() => {
         setInitialTableData(items);
     }, [])
 
-    const handleClick = (event) => {
+    const handleCurrentPage = (event) => {
         setcurrentPage(Number(event.target.id));
     };
 
@@ -142,7 +149,7 @@ const TableComponent = ({ items = [] }) => {
             <li
                 key={currentPageNumber}
                 id={currentPageNumber}
-                onClick={handleClick}
+                onClick={handleCurrentPage}
                 className={currentPage === currentPageNumber ? "active" : null}
             >
                 {currentPageNumber}

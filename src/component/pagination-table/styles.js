@@ -22,6 +22,18 @@ const TableWrapper = styled.div.withConfig({
 background-color: whitesmoke;
 `;
 
+const TableRowWrapper = styled.tr.withConfig({
+    displayName: "TableRowWrapper"
+})`
+background-color: white;
+
+${({isSingleRowSelected, id, rowId}) =>
+    (isSingleRowSelected && id === rowId) &&
+    css`
+     background-color: grey;
+    `}
+`;
+
 const DeleteAllButtonWrpper = styled.div.withConfig({
     displayName: "DeleteAllButtonWrpper"
 })`
@@ -33,7 +45,6 @@ ${({selectedItemsId}) =>
     margin: 2rem 0;
     `}
 `;
-
 
 const PaginationComponentParentWrapper = styled.div.withConfig({
     displayName: "PaginationComponentParentWrapper"
@@ -64,6 +75,7 @@ export {
     ParentWrapper,
     MenuBarWrapper,
     TableWrapper,
+    TableRowWrapper,
     DeleteAllButtonWrpper,
     PaginationComponentParentWrapper
 };
