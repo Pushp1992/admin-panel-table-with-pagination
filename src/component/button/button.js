@@ -4,14 +4,16 @@ import PropTypes from 'prop-types';
 const Button = ({
     name,
     onClick,
-    value
+    value,
+    disabled
 }) => {
     return(
-        <button value={value} onClick={onClick}>{name}</button>
+        <button value={value} disabled={disabled} onClick={onClick}>{name}</button>
     )
 };
 
 Button.propTypes = {
+    disabled: PropTypes.bool,
     name: PropTypes.string,
     onClick: PropTypes.func,
     value: PropTypes.string
