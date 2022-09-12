@@ -1,4 +1,4 @@
-const { default: styled } = require('styled-components');
+const { default: styled, css } = require('styled-components');
 
 const ParentWrapper = styled.div.withConfig({
     displayName: "ParentWrapper"
@@ -21,6 +21,19 @@ const TableWrapper = styled.div.withConfig({
 })`
 background-color: whitesmoke;
 `;
+
+const DeleteAllButtonWrpper = styled.div.withConfig({
+    displayName: "DeleteAllButtonWrpper"
+})`
+max-width: 5rem;
+
+${({selectedItemsId}) => 
+    !!selectedItemsId.length &&
+    css`
+    margin: 2rem 0;
+    `}
+`;
+
 
 const PaginationComponentParentWrapper = styled.div.withConfig({
     displayName: "PaginationComponentParentWrapper"
@@ -51,5 +64,6 @@ export {
     ParentWrapper,
     MenuBarWrapper,
     TableWrapper,
+    DeleteAllButtonWrpper,
     PaginationComponentParentWrapper
 };
