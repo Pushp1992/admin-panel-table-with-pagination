@@ -16,7 +16,10 @@ const {
 } = require('./styles');
 
 const Table = ({ items }) => {
-    const [tableData, setTableData] = useState(items);
+    const [rowData, setRowData] = useState([
+        {name: '', email: '', role: ''}
+    ]);
+    const [tableData, setTableData] = useState([]);
     const [selectedItemsId, setSelectedItemsId] = useState([]);
     const [currentRowId, setCurrentRowId] = useState('');
     const [isSingleRowSelected, setIsSingleRowSelected] = useState(false);
@@ -25,10 +28,18 @@ const Table = ({ items }) => {
         setTableData(items);
     }, [items])
 
-    const performEditOperation = (e, rowId) => {
+    const performEditOperation = (e, rowId, index) => {
         e.preventDefault();
         const { name } = e.target;
         console.log(name, rowId)
+    };
+
+    const handleInputChange = (e, index) => {
+        e.preventDefault();
+        const { name, value } = e.target;
+        const list = [...tableData];
+        list[index][name] = value;
+        setRowData(list);
     };
 
     const performDeleteOperation = (e, rowId) => {
@@ -94,11 +105,16 @@ const Table = ({ items }) => {
                         <TableRowWrapper key={index} id={item.id} rowId={currentRowId} isSingleRowSelected={isSingleRowSelected}>
                             <td><CheckBox className="select-one" id={item.id} onChange={(e) => handleCheckBoxChange(e, item.id)} /></td>
                             <td>{item.id}</td>
-                            <td>{item.name}</td>
-                            <td>{item.email}</td>
-                            <td>{item.role}</td>
+                            <td><TextField name="name" value={rowData.name || item.name} onChange={(e) => handleInputChange(e,index)} /></td>
+                            <td><TextField name="email" value={rowData.email || item.email} onChange={(e) => handleInputChange(e,index)} /></td>
+                            <td><TextField name="role" value={rowData.role || item.role} onChange={(e) => handleInputChange(e,index)} /></td>
+
+                            {/* <td>{rowData.id || item.id}</td>
+                            <td>{rowData.name || item.name}</td>
+                            <td>{rowData.email || item.email}</td>
+                            <td>{rowData.role || item.role}</td> */}
                             <td>
-                                <Button name="edit" value="edit" onClick={(e) => performEditOperation(e, item.id)} />
+                                <Button name="edit" value="edit" onClick={(e) => performEditOperation(e, item.id, index)} />
                                 {
                                     !selectedItemsId.length &&
                                     <Button name="delete" value="delete" onClick={(e) => performDeleteOperation(e, item.id)} />
