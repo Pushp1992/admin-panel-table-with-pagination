@@ -17,21 +17,23 @@ const {
 
 const Table = ({ items }) => {
     const [rowData, setRowData] = useState([
-        {name: '', email: '', role: ''}
+        { name: '', email: '', role: '' }
     ]);
     const [tableData, setTableData] = useState([]);
     const [selectedItemsId, setSelectedItemsId] = useState([]);
     const [currentRowId, setCurrentRowId] = useState('');
     const [isSingleRowSelected, setIsSingleRowSelected] = useState(false);
+    const [isEditModeOn, setIsEditModeOn] = useState(false);
+    const [currentRowIndex, setCurrentRowIndex] = useState(null)
 
     useEffect(() => {
         setTableData(items);
     }, [items])
 
-    const performEditOperation = (e, rowId, index) => {
+    const performEditOperation = (e, rowIndex) => {
         e.preventDefault();
-        const { name } = e.target;
-        console.log(name, rowId)
+        setIsEditModeOn(!isEditModeOn);
+        setCurrentRowIndex(rowIndex);
     };
 
     const handleInputChange = (e, index) => {
@@ -105,19 +107,36 @@ const Table = ({ items }) => {
                         <TableRowWrapper key={index} id={item.id} rowId={currentRowId} isSingleRowSelected={isSingleRowSelected}>
                             <td><CheckBox className="select-one" id={item.id} onChange={(e) => handleCheckBoxChange(e, item.id)} /></td>
                             <td>{item.id}</td>
-                            <td><TextField name="name" value={rowData.name || item.name} onChange={(e) => handleInputChange(e,index)} /></td>
-                            <td><TextField name="email" value={rowData.email || item.email} onChange={(e) => handleInputChange(e,index)} /></td>
-                            <td><TextField name="role" value={rowData.role || item.role} onChange={(e) => handleInputChange(e,index)} /></td>
 
-                            {/* <td>{rowData.id || item.id}</td>
-                            <td>{rowData.name || item.name}</td>
-                            <td>{rowData.email || item.email}</td>
-                            <td>{rowData.role || item.role}</td> */}
                             <td>
-                                <Button name="edit" value="edit" onClick={(e) => performEditOperation(e, item.id, index)} />
+                                {
+                                    isEditModeOn && (index === currentRowIndex) ?
+                                    <TextField name="name" value={rowData.name || item.name} onChange={(e) => handleInputChange(e, index)} />
+                                    :
+                                    <span>{rowData.name || item.name}</span>
+                                }
+                            </td>
+                            <td>
+                                {
+                                    isEditModeOn && (index === currentRowIndex) ?
+                                    <TextField name="email" value={rowData.email || item.email} onChange={(e) => handleInputChange(e, index)} />
+                                    :
+                                    <span>{rowData.email || item.email}</span>
+                                }
+                            </td>
+                            <td>
+                                {
+                                    isEditModeOn && (index === currentRowIndex) ?
+                                    <TextField name="role" value={rowData.role || item.role} onChange={(e) => handleInputChange(e, index)} />
+                                    :
+                                    <span>{rowData.role || item.role}</span>
+                                }
+                            </td>
+                            <td>
+                                <Button name={ isEditModeOn && (index === currentRowIndex) ? 'Save': 'Edit'} value="edit" onClick={(e) => performEditOperation(e, index)} />
                                 {
                                     !selectedItemsId.length &&
-                                    <Button name="delete" value="delete" onClick={(e) => performDeleteOperation(e, item.id)} />
+                                    <Button name="Dxelete" value="delete" onClick={(e) => performDeleteOperation(e, item.id)} />
                                 }
 
                             </td>
