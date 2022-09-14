@@ -136,7 +136,7 @@ const Table = ({ items }) => {
                                 <Button name={ isEditModeOn && (index === currentRowIndex) ? 'Save': 'Edit'} value="edit" onClick={(e) => performEditOperation(e, index)} />
                                 {
                                     !selectedItemsId.length &&
-                                    <Button name="Dxelete" value="delete" onClick={(e) => performDeleteOperation(e, item.id)} />
+                                    <Button name="Delete" value="delete" onClick={(e) => performDeleteOperation(e, item.id)} />
                                 }
 
                             </td>
