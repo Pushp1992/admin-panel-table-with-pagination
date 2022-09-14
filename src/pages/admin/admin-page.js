@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import TableComponent from '../../component/pagination-table/table';
+import TableComponent from '../../component/pagination-table/pagination';
 import * as DataService from '../../utils/service';
 
 const {
