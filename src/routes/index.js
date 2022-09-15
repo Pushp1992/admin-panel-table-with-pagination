@@ -8,7 +8,7 @@ import AdminPage from '../pages/admin/admin-page';
 const RouteList = () => {
     return (
         <Routes>
-            <Route path="/" element={<AdminPage />}></Route>
+            <Route path="/admin-panel-table-with-pagination" element={<AdminPage />}></Route>
         </Routes>
     )
 };
