@@ -4,8 +4,8 @@ import RouteList from '../src/routes';
 
 function App() {
   return (
-    <div className="App">
-      <Router>
+    <div className="App" data-testid="app">
+      <Router data-testid="router-component">
         <RouteList />
       </Router>
     </div>

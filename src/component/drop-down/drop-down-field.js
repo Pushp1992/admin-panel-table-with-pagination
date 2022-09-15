@@ -12,7 +12,7 @@ const DropDownField = ({
     onChange
 }) => {
     return (
-        <DropDownWrapper>
+        <DropDownWrapper data-testid="dropdown">
             {
                 !!items.length &&
                 <select name={itemType} onChange={onChange}>

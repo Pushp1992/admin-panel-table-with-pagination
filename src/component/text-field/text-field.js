@@ -19,7 +19,7 @@ const TextField = ({
     onChange
 }) => {
     return (
-        <input type="text" name={name} value={value} placeholder={placeholder} onChange={onChange} />
+        <input data-testid="text-field" type="text" name={name} value={value} placeholder={placeholder} onChange={onChange} />
     )
 };
 

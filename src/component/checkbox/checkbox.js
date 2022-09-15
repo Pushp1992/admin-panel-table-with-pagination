@@ -10,7 +10,7 @@ const CheckBox = ({
 }) => {
     return (
         <>
-            <input type="checkbox" id={id} name={name} className={className} value={value} onChange={onChange} />
+            <input data-testid="checkbox" type="checkbox" id={id} name={name} className={className} value={value} onChange={onChange} />
             <label htmlFor={name}>{name}</label>
         </>
     )

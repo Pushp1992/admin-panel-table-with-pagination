@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot with actual DOM tree 1`] = `
+Array [
+  <input
+    data-testid="checkbox"
+    type="checkbox"
+  />,
+  <label />,
+]
+`;
