@@ -2,7 +2,7 @@
   "name": "admin-panel-ui",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://pushp1992.github.io",
+  "homepage": "https://pushp1992.github.io/admin-panel-table-with-pagination/settings/pages",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/user-event": "^13.5.0",
