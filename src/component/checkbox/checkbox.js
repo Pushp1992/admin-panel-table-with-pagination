@@ -1,6 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+/**
+ * 
+ * @param {Number} id - buton id
+ * @param {String} name - list of all table rows
+ * @param {Function} onChange - handle user input chnage
+ * @param {String} value - input value
+ * @param {String} className - element classname
+ *  
+ * @returns React Button Element
+ */
 const CheckBox = ({
     id,
     name,

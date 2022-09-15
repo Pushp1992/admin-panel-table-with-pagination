@@ -10,6 +10,12 @@ const {
     TableRowWrapper,
 } = require('./styles');
 
+/**
+ * 
+ * @param {Array} items - list of all table rows
+ *  
+ * @returns React Element<div>
+ */
 const Table = ({ items }) => {
     const [rowData, setRowData] = useState([
         { name: '', email: '', role: '' }

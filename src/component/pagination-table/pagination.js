@@ -12,6 +12,12 @@ const {
     PaginationComponentParentWrapper
 } = require('./styles');
 
+/**
+ * 
+ * @param {Array} items - list of all table rows
+ *  
+ * @returns React Element<div>
+ */
 const TableComponent = ({ items = [] }) => {
     const [initialTableData, setInitialTableData] = useState([]);
     const [searchKeyword, setSearchKeyword] = useState('');
