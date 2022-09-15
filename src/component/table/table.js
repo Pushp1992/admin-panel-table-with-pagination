@@ -89,8 +89,8 @@ const Table = ({ items }) => {
                     <Button name="delete all" value="delete" onClick={(e) => performDeleteOperation(e)} />
                 }
             </DeleteAllButtonWrpper>
-            <table>
-                <tr>
+            <table data-testid="table">
+                <tr data-testid="table-head">
                     <th><CheckBox className="select-all" onChange={handleCheckBoxChange} /></th>
                     <th>#Id</th>
                     <th>Name</th>

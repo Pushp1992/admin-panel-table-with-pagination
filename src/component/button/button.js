@@ -8,7 +8,7 @@ const Button = ({
     disabled
 }) => {
     return(
-        <button value={value} disabled={disabled} onClick={onClick}>{name}</button>
+        <button data-testid="button" value={value} disabled={disabled} onClick={onClick}>{name}</button>
     )
 };
 

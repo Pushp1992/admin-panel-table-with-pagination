@@ -76,7 +76,7 @@ const TableComponent = ({ items = [] }) => {
 
     const PaginationComponent = () => {
         return (
-            <PaginationComponentParentWrapper>
+            <PaginationComponentParentWrapper data-testid="table-component">
                 <Button name="prev" disabled={currentPage === pageCountList[0] ? true : false} onClick={handlePrevbtn} />
 
                 {minPageNumberLimit >= 1 &&
