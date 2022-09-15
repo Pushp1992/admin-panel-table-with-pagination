@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`matches the snapshot with actual DOM tree 1`] = `
-<button
-  data-testid="button"
-/>
-`;

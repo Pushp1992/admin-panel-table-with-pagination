@@ -1,8 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`match snapshot with DOM tree 1`] = `
-<input
-  data-testid="text-field"
-  type="text"
-/>
-`;
