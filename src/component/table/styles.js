@@ -4,6 +4,15 @@ const TableWrapper = styled.div.withConfig({
     displayName: "TableWrapper"
 })`
 background-color: whitesmoke;
+table {
+    min-height: 40rem;
+    min-width: 50rem;
+}
+
+Button {
+    width: 5rem;
+    margin-left: 1rem;
+}
 `;
 
 const TableRowWrapper = styled.tr.withConfig({

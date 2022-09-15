@@ -3,13 +3,14 @@ const { default: styled } = require('styled-components');
 const ParentWrapper = styled.div.withConfig({
     displayName: "ParentWrapper"
 })`
-/* background-color: whitesmoke; */
+min-width: 50rem;
 `;
 
 const MenuBarWrapper = styled.div.withConfig({
     displayName: "MenuBarWrapper"
 })`
-padding-bottom: 5rem;
+/* padding-bottom: 5rem; */
+padding: 2rem 0rem;
 background-color: #3c1760;
 display: flex;
 flex-direction: row;

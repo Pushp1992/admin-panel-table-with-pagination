@@ -4,9 +4,9 @@ const AdminPanelWrapper = styled.div.withConfig({
     displayName: "AdminPanelWrapper"
 })`
 display: grid;
+justify-content: center;
 grid-column: auto;
 margin: 4rem;
-min-height: 70vh;
 `;
 
 const MenuBarWrapper = styled.div.withConfig({

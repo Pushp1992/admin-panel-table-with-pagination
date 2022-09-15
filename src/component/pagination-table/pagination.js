@@ -126,8 +126,8 @@ const TableComponent = ({ items = [] }) => {
             <MenuBarWrapper>
                 <DropDownField name="search-filter" items={Constants.SearchFilterOption} onChange={getDropDownFieldvalue} />
                 <TextField name="search" value={searchKeyword} placeholder="search" onChange={handleInputChange} />
-                <Button name="search" onClick={handleSearchOperation} />
-                <Button name="reset" onClick={handleResetOperation} />
+                <Button name="Search" onClick={handleSearchOperation} />
+                <Button name="Reset" onClick={handleResetOperation} />
             </MenuBarWrapper>
             <Table items={currentItems} />
             <PaginationComponent />

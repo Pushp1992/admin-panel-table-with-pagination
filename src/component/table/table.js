@@ -86,7 +86,7 @@ const Table = ({ items }) => {
             <DeleteAllButtonWrpper selectedItemsId={selectedItemsId}>
                 {
                     !!selectedItemsId.length &&
-                    <Button name="delete all" value="delete" onClick={(e) => performDeleteOperation(e)} />
+                    <Button name="Delete All" value="delete" onClick={(e) => performDeleteOperation(e)} />
                 }
             </DeleteAllButtonWrpper>
             <table data-testid="table">
